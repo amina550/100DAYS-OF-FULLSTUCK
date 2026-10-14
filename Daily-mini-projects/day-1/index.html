@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 1 – Data Filter UI (map · filter · reduce)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>👥 Employee Data Dashboard</h1>
+      <p class="subtitle">Day 1 · Array Methods: <code>map</code> · <code>filter</code> · <code>reduce</code></p>
+    </div>
+  </header>
+
+  <!-- ===== CONTROLS ===== -->
+  <main class="container">
+    <section class="controls" aria-label="Filter and sort controls">
+
+      <!-- Role filter -->
+      <div class="control-group">
+        <h2 class="control-label">Filter by Role</h2>
+        <div class="btn-row" id="role-filters" role="group" aria-label="Role filter buttons">
+          <!-- injected by JS -->
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="control-group">
+        <h2 class="control-label">Sort by Age</h2>
+        <div class="btn-row" role="group" aria-label="Sort buttons">
+          <button class="btn btn--sort active" data-sort="none"  >Default</button>
+          <button class="btn btn--sort"        data-sort="asc"   >↑ Youngest First</button>
+          <button class="btn btn--sort"        data-sort="desc"  >↓ Oldest First</button>
+        </div>
+      </div>
+
+      <!-- Reset -->
+      <div class="control-group">
+        <button class="btn btn--reset" id="reset-btn">⟳ Reset All</button>
+      </div>
+
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <section class="stats-bar" aria-live="polite" aria-atomic="true">
+      <div class="stat">
+        <span class="stat__label">Showing</span>
+        <span class="stat__value" id="stat-count">50</span>
+        <span class="stat__label">employees</span>
+      </div>
+      <div class="stat">
+        <span class="stat__label">Total Salary</span>
+        <span class="stat__value" id="stat-salary">$0</span>
+      </div>
+      <div class="stat">
+        <span class="stat__label">Avg Age</span>
+        <span class="stat__value" id="stat-age">–</span>
+      </div>
+    </section>
+
+    <!-- ===== TABLE ===== -->
+    <section class="table-wrapper" aria-label="Employee table">
+      <table class="data-table" id="employee-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Role</th>
+            <th>Salary</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- rows injected by JS -->
+        </tbody>
+      </table>
+      <p class="empty-msg" id="empty-msg" hidden>No employees match the selected filters.</p>
+    </section>
+
+    <!-- ===== LEARN PANEL ===== -->
+    <section class="learn-panel">
+      <h2>🧠 How the Array Methods Work Here</h2>
+
+      <div class="learn-grid">
+
+        <article class="learn-card">
+          <h3><code>filter()</code></h3>
+          <p>Returns a <strong>new array</strong> of only the items that pass a test function.
+          Used to keep only employees whose role matches the active filter.</p>
+          <pre><code>// Keep only Designers
+const designers = users.filter(u => u.role === "Designer");
+// [{ name: "Alice", role: "Designer", ... }, ...]</code></pre>
+        </article>
+
+        <article class="learn-card">
+          <h3><code>map()</code></h3>
+          <p>Transforms every item and returns a <strong>new array of the same length</strong>.
+          Used to convert each user object into an HTML table-row string.</p>
+          <pre><code>const rows = visible.map((u, i) =>
+  `&lt;tr&gt;&lt;td&gt;${i+1}&lt;/td&gt;&lt;td&gt;${u.name}&lt;/td&gt;...&lt;/tr&gt;`
+);
+tableBody.innerHTML = rows.join("");</code></pre>
+        </article>
+
+        <article class="learn-card learn-card--highlight">
+          <h3><code>reduce()</code> ← the tricky one</h3>
+          <p><code>reduce</code> walks through every item, passing a running
+          <strong>accumulator</strong> from one iteration to the next. It returns
+          <strong>a single value</strong> — here: the total salary sum.</p>
+          <pre><code>// accumulator starts at 0 (the second argument)
+const totalSalary = visible.reduce((acc, user) => {
+  return acc + user.salary;   // acc grows with each iteration
+}, 0);                        // ← initial value (NEVER forget this!)</code></pre>
+          <p class="tip">💡 Forgetting the initial value (<code>0</code> here) is the #1 mistake.
+          Without it, the first element becomes the accumulator and numeric
+          addition silently becomes string concatenation.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== ERROR LOG ===== -->
+    <section class="error-log" id="error-log" aria-live="assertive">
+      <h2>🪲 Error Log <span class="error-count" id="error-count">0</span></h2>
+      <ul id="error-list">
+        <li class="error-item error-item--empty">No errors detected yet.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
