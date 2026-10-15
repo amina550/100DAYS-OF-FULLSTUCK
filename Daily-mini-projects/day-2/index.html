@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 2 – Advanced Kanban Board | 100 Days of Full Stack</title>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       📚  REACT CONCEPTS COVERED (Days 11-20)
+       ═══════════════════════════════════════════════════════════════════
+       ✦ Components     → Each card, column & modal is a self-contained unit
+       ✦ Props          → Data passed from board → column → card
+       ✦ State          → tasks[], columns[], activeTask tracked in AppState
+       ✦ useState       → AppState.set() mirrors React's useState setter
+       ✦ useEffect      → AppState.subscribe() mirrors useEffect side effects
+       ✦ Lifting State  → Board owns all state; columns/cards read from it
+       ✦ Keys           → Every task has a unique id (like React list keys)
+       ✦ Conditional UI → Modal, badge counts, empty-state messages
+       ═══════════════════════════════════════════════════════════════════ -->
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── App Shell ─────────────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-left">
+      <span class="logo">⚡</span>
+      <div>
+        <h1 class="header-title">KanbanFlow</h1>
+        <p class="header-sub">Day 2 · React Concepts · 100 Days of Full Stack</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" id="btn-filter-all" data-filter="all">All</button>
+      <button class="btn btn-ghost" id="btn-filter-high" data-filter="high">🔴 High</button>
+      <button class="btn btn-ghost" id="btn-filter-med"  data-filter="medium">🟡 Med</button>
+      <button class="btn btn-ghost" id="btn-filter-low"  data-filter="low">🟢 Low</button>
+      <button class="btn btn-primary" id="btn-add-task">＋ New Task</button>
+    </div>
+  </header>
+
+  <!-- ── Board ─────────────────────────────────────────────────── -->
+  <main class="board" id="board">
+    <!-- Columns are rendered by JS -->
+  </main>
+
+  <!-- ── Task Modal ─────────────────────────────────────────────── -->
+  <div class="modal-backdrop" id="modal-backdrop" hidden aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-heading">New Task</h2>
+        <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      </div>
+      <form id="task-form" novalidate>
+        <div class="form-group">
+          <label for="input-title">Title <span class="required">*</span></label>
+          <input type="text" id="input-title" placeholder="What needs to be done?" maxlength="80" required />
+          <span class="field-error" id="err-title" hidden>Please enter a title.</span>
+        </div>
+        <div class="form-group">
+          <label for="input-desc">Description</label>
+          <textarea id="input-desc" rows="3" placeholder="Add more details…" maxlength="300"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="input-priority">Priority</label>
+            <select id="input-priority">
+              <option value="low">🟢 Low</option>
+              <option value="medium" selected>🟡 Medium</option>
+              <option value="high">🔴 High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="input-due">Due Date</label>
+            <input type="date" id="input-due" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="input-category">Category</label>
+          <input type="text" id="input-category" placeholder="e.g. Design, Dev, Marketing" maxlength="30" list="category-suggestions" />
+          <datalist id="category-suggestions">
+            <option value="Design"></option>
+            <option value="Development"></option>
+            <option value="Marketing"></option>
+            <option value="Research"></option>
+            <option value="QA"></option>
+          </datalist>
+        </div>
+        <div class="form-group">
+          <label for="input-column">Column</label>
+          <select id="input-column">
+            <!-- Populated by JS -->
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" id="btn-delete-task" hidden>🗑 Delete</button>
+          <button type="submit" class="btn btn-primary">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Toast container ────────────────────────────────────────── -->
+  <div class="toast-area" id="toast-area" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
