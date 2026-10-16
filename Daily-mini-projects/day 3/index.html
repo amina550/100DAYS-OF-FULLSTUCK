@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 3 — Custom Context Menu</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- ─── Page Content ─────────────────────────────── -->
+    <main class="page">
+
+      <header class="hero">
+        <h1>🖱️ Custom Context Menu</h1>
+        <p class="subtitle">Right-click anywhere on the page — or on a specific card — to see the custom menu in action.</p>
+      </header>
+
+      <!-- Cards – used to demo e.target vs e.currentTarget -->
+      <section class="cards" id="card-area">
+
+        <article class="card" data-type="image">
+          <span class="card-icon">🖼️</span>
+          <h2>Image Card</h2>
+          <p>Right-click me to get image-specific actions.</p>
+          <!-- nested element – great for showing target vs currentTarget -->
+          <span class="badge">New</span>
+        </article>
+
+        <article class="card" data-type="link">
+          <span class="card-icon">🔗</span>
+          <h2>Link Card</h2>
+          <p>Right-click me to get link-specific actions.</p>
+          <span class="badge">Hot</span>
+        </article>
+
+        <article class="card" data-type="text">
+          <span class="card-icon">📝</span>
+          <h2>Text Card</h2>
+          <p>Right-click me to get text-specific actions.</p>
+          <span class="badge">Draft</span>
+        </article>
+
+      </section>
+
+      <!-- Live event-target logger -->
+      <section class="logger-section">
+        <h2>🔍 Event Target Inspector</h2>
+        <p>Shows the difference between <code>e.target</code> and <code>e.currentTarget</code> on every right-click.</p>
+        <div class="logger" id="logger">
+          <p class="log-placeholder">Right-click anywhere to see event details…</p>
+        </div>
+      </section>
+
+      <!-- e.target vs e.currentTarget explanation -->
+      <section class="docs-section">
+        <h2>📚 e.target vs e.currentTarget</h2>
+        <div class="docs-grid">
+          <div class="doc-card target">
+            <h3><code>e.target</code></h3>
+            <p>The <strong>exact element the user clicked on</strong>. It bubbles up from the innermost element that received the event.</p>
+            <p>If you click the <em>badge</em> inside the card, <code>e.target</code> is the <code>&lt;span class="badge"&gt;</code>.</p>
+          </div>
+          <div class="doc-card current-target">
+            <h3><code>e.currentTarget</code></h3>
+            <p>The element <strong>where the event listener is attached</strong>. It stays the same regardless of where inside it you click.</p>
+            <p>Because the listener lives on <code>&lt;body&gt;</code>, <code>e.currentTarget</code> is always <code>&lt;body&gt;</code>.</p>
+          </div>
+        </div>
+        <div class="analogy">
+          <p>💡 <strong>Analogy:</strong> Imagine a building (currentTarget = the building). You knock on a specific room door (target = the room). The guard at the building entrance always intercepts the knock, but knows exactly which room you knocked on.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ─── Custom Context Menu ───────────────────────── -->
+    <nav class="context-menu" id="contextMenu" role="menu" aria-label="Context menu" hidden>
+      <ul>
+        <!-- Generic actions (always shown) -->
+        <li class="menu-group-label" id="menuGroupLabel">Page Actions</li>
+        <li><button class="menu-item" data-action="copy" role="menuitem">📋 Copy</button></li>
+        <li><button class="menu-item" data-action="print" role="menuitem">🖨️ Print Page</button></li>
+        <li class="separator" role="separator"></li>
+        <!-- Context-specific actions (shown dynamically) -->
+        <li id="contextActions"></li>
+        <li class="separator" role="separator" id="contextSeparator" hidden></li>
+        <li><button class="menu-item close-item" data-action="close" role="menuitem">✖ Close Menu</button></li>
+      </ul>
+    </nav>
+
+    <script src="script.js"></script>
+  </body>
+</html>
