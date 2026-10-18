@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 5 — Sticky Notes Wall</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ── Header ── -->
+    <header class="app-header">
+      <div class="header-inner">
+        <h1 class="app-title">
+          <span class="pin-icon" aria-hidden="true">📌</span>
+          Sticky Notes Wall
+        </h1>
+        <button id="add-note-btn" class="btn btn--primary" aria-label="Add new note">
+          <span aria-hidden="true">＋</span> Add Note
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Error / Info toast ── -->
+    <div id="toast" class="toast" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- ── Notes grid ── -->
+    <main id="notes-grid" class="notes-grid" aria-label="Notes wall"></main>
+
+    <!-- ── Empty state ── -->
+    <div id="empty-state" class="empty-state" hidden>
+      <span class="empty-icon" aria-hidden="true">🗒️</span>
+      <p>No notes yet. Click <strong>+ Add Note</strong> to get started!</p>
+    </div>
+
+    <!-- ── Note card template (cloned by JS) ── -->
+    <template id="note-template">
+      <article class="note-card" data-id="">
+        <header class="note-header">
+          <span class="note-drag-handle" title="Drag to reorder" aria-hidden="true">⠿</span>
+          <div class="note-color-dots" role="group" aria-label="Note color">
+            <button class="color-dot" data-color="yellow"  style="background:#fef08a" aria-label="Yellow"></button>
+            <button class="color-dot" data-color="blue"    style="background:#93c5fd" aria-label="Blue"></button>
+            <button class="color-dot" data-color="green"   style="background:#86efac" aria-label="Green"></button>
+            <button class="color-dot" data-color="pink"    style="background:#f9a8d4" aria-label="Pink"></button>
+            <button class="color-dot" data-color="orange"  style="background:#fdba74" aria-label="Orange"></button>
+          </div>
+          <button class="note-delete-btn" aria-label="Delete note" title="Delete note">✕</button>
+        </header>
+
+        <div
+          class="note-body"
+          contenteditable="true"
+          role="textbox"
+          aria-multiline="true"
+          aria-label="Note text"
+          spellcheck="true"
+          data-placeholder="Write your note here…"
+        ></div>
+
+        <footer class="note-footer">
+          <time class="note-timestamp" datetime=""></time>
+        </footer>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
