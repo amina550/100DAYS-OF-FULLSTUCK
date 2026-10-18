@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 4 – Theme Preferences | ES6+ Deep Dive</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- ────────────── Header ────────────── -->
+      <header class="app-header">
+        <div class="header-inner">
+          <span class="day-badge">Day 4</span>
+          <h1>Theme Preferences</h1>
+          <p class="subtitle">ES6+ · Destructuring · Spread · Rest</p>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- ────────────── Settings Panel ────────────── -->
+        <section class="panel" id="settings-panel">
+          <h2 class="panel-title">
+            <span class="icon">🎨</span> Customise Your Theme
+          </h2>
+
+          <form id="theme-form" novalidate>
+            <!-- Color Scheme -->
+            <fieldset class="field-group">
+              <legend>Color Scheme</legend>
+              <div class="color-grid">
+                <label class="color-chip" data-color="ocean">
+                  <input type="radio" name="colorScheme" value="ocean" checked />
+                  <span class="swatch ocean"></span>
+                  <span>Ocean</span>
+                </label>
+                <label class="color-chip" data-color="forest">
+                  <input type="radio" name="colorScheme" value="forest" />
+                  <span class="swatch forest"></span>
+                  <span>Forest</span>
+                </label>
+                <label class="color-chip" data-color="sunset">
+                  <input type="radio" name="colorScheme" value="sunset" />
+                  <span class="swatch sunset"></span>
+                  <span>Sunset</span>
+                </label>
+                <label class="color-chip" data-color="midnight">
+                  <input type="radio" name="colorScheme" value="midnight" />
+                  <span class="swatch midnight"></span>
+                  <span>Midnight</span>
+                </label>
+                <label class="color-chip" data-color="rose">
+                  <input type="radio" name="colorScheme" value="rose" />
+                  <span class="swatch rose"></span>
+                  <span>Rose</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Font -->
+            <fieldset class="field-group">
+              <legend>Font Family</legend>
+              <div class="font-grid">
+                <label class="font-chip">
+                  <input type="radio" name="fontFamily" value="inter" checked />
+                  <span class="font-preview" style="font-family: 'Inter', sans-serif">Inter</span>
+                </label>
+                <label class="font-chip">
+                  <input type="radio" name="fontFamily" value="serif" />
+                  <span class="font-preview" style="font-family: Georgia, serif">Georgia</span>
+                </label>
+                <label class="font-chip">
+                  <input type="radio" name="fontFamily" value="mono" />
+                  <span class="font-preview" style="font-family: 'Courier New', monospace">Courier</span>
+                </label>
+                <label class="font-chip">
+                  <input type="radio" name="fontFamily" value="poppins" />
+                  <span class="font-preview" style="font-family: 'Trebuchet MS', sans-serif">Trebuchet</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Font Size -->
+            <fieldset class="field-group">
+              <legend>Font Size</legend>
+              <div class="slider-wrap">
+                <input type="range" id="fontSize" name="fontSize" min="12" max="24" value="16" step="1" />
+                <span class="slider-label" id="fontSizeLabel">16px</span>
+              </div>
+            </fieldset>
+
+            <!-- Layout -->
+            <fieldset class="field-group">
+              <legend>Layout</legend>
+              <div class="layout-grid">
+                <label class="layout-chip">
+                  <input type="radio" name="layout" value="comfortable" checked />
+                  <span class="layout-icon">▦</span>
+                  <span>Comfortable</span>
+                </label>
+                <label class="layout-chip">
+                  <input type="radio" name="layout" value="compact" />
+                  <span class="layout-icon">☰</span>
+                  <span>Compact</span>
+                </label>
+                <label class="layout-chip">
+                  <input type="radio" name="layout" value="wide" />
+                  <span class="layout-icon">⊞</span>
+                  <span>Wide</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <!-- Toggles -->
+            <fieldset class="field-group">
+              <legend>Extras</legend>
+              <div class="toggle-list">
+                <label class="toggle-row">
+                  <span>Animations</span>
+                  <input type="checkbox" name="animations" checked role="switch" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+                <label class="toggle-row">
+                  <span>High Contrast</span>
+                  <input type="checkbox" name="highContrast" role="switch" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+                <label class="toggle-row">
+                  <span>Reduced Motion</span>
+                  <input type="checkbox" name="reducedMotion" role="switch" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="btn-row">
+              <button type="button" id="resetBtn" class="btn btn-ghost">↺ Reset to Defaults</button>
+              <button type="button" id="applyBtn" class="btn btn-primary">Apply Theme</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ────────────── Live Preview ────────────── -->
+        <section class="panel preview-panel" id="preview-panel">
+          <h2 class="panel-title"><span class="icon">👁</span> Live Preview</h2>
+          <div id="preview-card" class="preview-card">
+            <h3 id="preview-heading">Hello, World!</h3>
+            <p id="preview-body">
+              This is a live preview of your theme. Adjust the settings on the
+              left and click <strong>Apply Theme</strong> to see your changes
+              reflected here.
+            </p>
+            <button class="preview-btn" id="preview-btn">Sample Button</button>
+          </div>
+        </section>
+
+        <!-- ────────────── JS Concept Explorer ────────────── -->
+        <section class="panel concept-panel" id="concept-panel">
+          <h2 class="panel-title"><span class="icon">🧠</span> Under the Hood – ES6+ Concepts</h2>
+          <div class="concept-tabs" role="tablist">
+            <button class="tab-btn active" data-tab="spread" role="tab">Spread</button>
+            <button class="tab-btn" data-tab="destructure" role="tab">Destructuring</button>
+            <button class="tab-btn" data-tab="rest" role="tab">Rest</button>
+            <button class="tab-btn" data-tab="refs" role="tab">References ⚠️</button>
+          </div>
+
+          <div class="tab-content" id="tab-spread">
+            <p class="concept-description">
+              The <strong>spread operator</strong> <code>...</code> shallow-copies every key from one
+              object into a new one. User choices sit on top of defaults — later keys win.
+            </p>
+            <pre class="code-block" id="spread-code"></pre>
+          </div>
+
+          <div class="tab-content hidden" id="tab-destructure">
+            <p class="concept-description">
+              <strong>Destructuring</strong> lets you unpack values from objects or arrays into
+              distinct variables in one clean line, with optional defaults.
+            </p>
+            <pre class="code-block" id="destructure-code"></pre>
+          </div>
+
+          <div class="tab-content hidden" id="tab-rest">
+            <p class="concept-description">
+              The <strong>rest parameter</strong> <code>...rest</code> collects all remaining
+              arguments / properties into a single array or object. Useful for
+              variadic functions and omitting keys.
+            </p>
+            <pre class="code-block" id="rest-code"></pre>
+          </div>
+
+          <div class="tab-content hidden" id="tab-refs">
+            <p class="concept-description">
+              ⚠️ <strong>Spread is shallow.</strong> Nested objects are still shared by reference.
+              Mutating a nested property on the "copy" also changes the original!
+            </p>
+            <pre class="code-block" id="refs-code"></pre>
+            <div class="demo-box" id="ref-demo">
+              <button class="btn btn-ghost" id="runRefDemo">▶ Run Demo</button>
+              <ol class="demo-steps" id="demo-steps"></ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- ────────────── Merged Settings Display ────────────── -->
+        <section class="panel" id="merged-panel">
+          <h2 class="panel-title"><span class="icon">📋</span> Merged Settings Object</h2>
+          <p class="concept-description">
+            This is the live result of <code>{ ...defaultSettings, ...userChoices }</code>.
+            Keys from your choices override the defaults; untouched keys keep their default value.
+          </p>
+          <pre class="code-block json-output" id="merged-output">Click "Apply Theme" to see the merged object.</pre>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>Day 4 / 100 Days of Full Stack · ES6+ Destructuring, Spread & Rest</p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
